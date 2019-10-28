@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 /*
@@ -95,21 +95,9 @@ class App extends Component {
 
 
     render() {
-        const buttonStyle = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
-        };
 
         let persons = null;
-
+        let buttonClass = '';
         if (this.state.showPersons) {
             persons = (
                 this.state.persons.map((person, personIndex) => {
@@ -124,32 +112,26 @@ class App extends Component {
                     )
                 })
             );
-
-            buttonStyle.backgroundColor = 'red';
-            buttonStyle[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            }
-
+            buttonClass = classes.Red
         }
 
-        const classes = [];
+        const styles = [];
         if (this.state.persons.length <= 2) {
-            classes.push('red')
+            styles.push(classes.red)
         }
 
         if (this.state.persons.length <= 1) {
-            classes.push('bold')
+            styles.push(classes.bold)
         }
 
         return (
-                <div className="App">
+                <div className={classes.App}>
                     <h1>Hellow World!</h1>
-                    <p className={classes.join(' ')}>This will dynmically takes classes</p>
+                    <p className={styles.join(' ')}>This will dynmically takes classes</p>
                     <div>
                         <br/><br/>
                         <button
-                            style={buttonStyle}
+                            className={buttonClass}
                             onClick={this.togglePersons}>
                             Toggle persons
                         </button>
