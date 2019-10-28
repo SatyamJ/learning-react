@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 
 import classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 /*
 const app = (props) => {
@@ -102,13 +103,14 @@ class App extends Component {
             persons = (
                 this.state.persons.map((person, personIndex) => {
                     return (
-                        <Person
-                            name={person.name}
-                            age={person.age}
-                            changed={(event) => this.nameChangedHandler(event, person.id)}
-                            click={() => this.deletePersonHandler(personIndex)}
-                            key={person.id}
-                        />
+                        <ErrorBoundary key={person.id}>
+                            <Person
+                                name={person.name}
+                                age={person.age}
+                                changed={(event) => this.nameChangedHandler(event, person.id)}
+                                click={() => this.deletePersonHandler(personIndex)}
+                            />
+                        </ErrorBoundary>
                     )
                 })
             );
@@ -125,19 +127,19 @@ class App extends Component {
         }
 
         return (
-                <div className={classes.App}>
-                    <h1>Hellow World!</h1>
-                    <p className={styles.join(' ')}>This will dynmically takes classes</p>
-                    <div>
-                        <br/><br/>
-                        <button
-                            className={buttonClass}
-                            onClick={this.togglePersons}>
-                            Toggle persons
-                        </button>
-                        {persons}
-                    </div>
+            <div className={classes.App}>
+                <h1>Hellow World!</h1>
+                <p className={styles.join(' ')}>This will dynmically takes classes</p>
+                <div>
+                    <br/><br/>
+                    <button
+                        className={buttonClass}
+                        onClick={this.togglePersons}>
+                        Toggle persons
+                    </button>
+                    {persons}
                 </div>
+            </div>
         );
     }
 }
