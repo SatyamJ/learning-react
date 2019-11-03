@@ -1,11 +1,11 @@
-import React, {useEffect, memo, useRef} from 'react';
+import React, {useEffect, memo, useRef, useContext} from 'react';
 import classes from '../../components/Cockpit/Cockpit.css';
 import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
 
     const toggleButtonRef = useRef(null);
-
+    const authContext = useContext(AuthContext);
     useEffect(() => {
         console.log('Cockpit.js | 1st useEffect');
         toggleButtonRef.current.click();
@@ -13,6 +13,7 @@ const cockpit = (props) => {
             alert('Data saved to cloud');
         }, 1000);*/
     }, []);
+
 
 
     useEffect(() => {
@@ -56,13 +57,17 @@ const cockpit = (props) => {
                     onClick={props.clicked}>
                     Toggle persons
                 </button>
-                <AuthContext.Consumer>
+                {/*<AuthContext.Consumer>
                     {(context) =>
                         <button onClick={context.login}>
                             Login
                         </button>
                     }
-                </AuthContext.Consumer>
+                </AuthContext.Consumer>*/}
+
+                <button onClick={authContext.login}>
+                    Login
+                </button>
 
             </div>
         </div>
