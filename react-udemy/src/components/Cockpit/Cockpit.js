@@ -1,14 +1,39 @@
-import React from 'react';
+import React, {useEffect,  memo} from 'react';
 import classes from "../../components/Cockpit/Cockpit.css";
 
 const cockpit = (props) => {
+
+    useEffect(() => {
+        console.log('Cockpit.js | 1st useEffect');
+        setTimeout(() => {
+            alert('Data saved to cloud');
+        }, 1000);
+    }, []);
+
+
+    useEffect(() => {
+        console.log('Cockpit.js | 2nd useEffect');
+        return (() => {
+            console.log('Cockpit.js | 2nd useEffect | cleanup');
+        })
+    }, [props.personsLength]);
+
+
+    useEffect(() => {
+        console.log('Cockpit.js | 3rd useEffect');
+        return (() => {
+            console.log('Cockpit.js | 3rd useEffect | cleanup');
+        })
+    }, []);
+
+    console.log('Cockpit.js | render');
     const styles = [];
     let buttonClass = '';
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         styles.push(classes.red)
     }
 
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         styles.push(classes.bold)
     }
 
@@ -17,7 +42,7 @@ const cockpit = (props) => {
     }
     return (
         <div className={classes.Cockpit}>
-            <h1>Hello World!</h1>
+            <h1>{props.title}</h1>
             <p className={styles.join(' ')}>This will dynmically takes classes</p>
             <div>
                 <br/><br/>
@@ -31,4 +56,4 @@ const cockpit = (props) => {
     );
 };
 
-export default cockpit;
+export default React.memo(cockpit);

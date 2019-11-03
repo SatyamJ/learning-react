@@ -4,6 +4,9 @@ import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import WithClass from '../hoc/WithClass'
+import Aux from '../hoc/Aux'
+import withWrappedComponent from '../hoc/withWrappedComponent';
 
 /*
 const app = (props) => {
@@ -46,6 +49,12 @@ export  default app;*/
 
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        console.log('App.js | constructor');
+    }
+
     state = {
         persons: [
             {id: 1, name: "Raju", age: 6},
@@ -53,8 +62,23 @@ class App extends Component {
             {id: 3, name: "Gotya", age: 24}
         ],
         showPersons: false,
-        username: ""
+        username: "",
+        showCockpit: true,
+        nameChangeCounter: 0
     };
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('App.js | getDerivedStateFromProps');
+        return state;
+    }
+
+    /*componentWillMount() {
+        console.log('App.js | componentWillMount');
+    }*/
+
+    componentDidMount() {
+        console.log('App.js | componentDidMount');
+    }
 
     switchNameHandler = (newName) => {
         // console.log("Switch name clicked");
@@ -76,8 +100,11 @@ class App extends Component {
         const persons = [...this.state.persons];
         persons[personIndex] = person;
 
-        this.setState({
-            persons: persons
+        this.setState((prevState, props) => {
+            return {
+                persons: persons,
+                nameChangeCounter: prevState.nameChangeCounter + 1
+            }
         });
     };
 
@@ -95,8 +122,15 @@ class App extends Component {
         })
     };
 
+    toggleCockpit = () => {
+        this.setState({
+            showCockpit: !this.state.showCockpit
+        })
+    };
+
 
     render() {
+        console.log('App.js | render');
         let persons = null;
         if (this.state.showPersons) {
             persons = <Persons persons={this.state.persons}
@@ -104,18 +138,42 @@ class App extends Component {
                                changed={this.nameChangedHandler}/>;
 
         }
-        return (
-            <div className={classes.App}>
+
+        let cockpit = null;
+        if (this.state.showCockpit) {
+            cockpit = <div>
                 <Cockpit
-                    persons={this.state.persons}
+                    title={this.props.appTitle}
+                    personsLength={this.state.persons.length}
                     clicked={this.togglePersons}
-                    showPersons={this.state.showPersons}
-                />
+                    showPersons={this.state.showPersons}/>
+            </div>
+        }
+        return (
+            /*
+            <div className={classes.App}>
+                <button onClick={this.toggleCockpit}>Toggle Cockpit</button>
+                {cockpit}
                 {persons}
             </div>
+            */
+
+            /*
+            <WithClass classes={classes.App}>
+                <button onClick={this.toggleCockpit}>Toggle Cockpit</button>
+                {cockpit}
+                {persons}
+            </WithClass>
+            */
+
+            <Aux>
+                <button onClick={this.toggleCockpit}>Toggle Cockpit</button>
+                {cockpit}
+                {persons}
+            </Aux>
         )
     }
 }
 
-export default App;
-
+// export default App;
+export default withWrappedComponent(App, classes.App);
