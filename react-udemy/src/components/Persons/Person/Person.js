@@ -1,4 +1,7 @@
 import React, {Component, useEffect} from 'react';
+
+import Proptypes from 'prop-types';
+
 import classes from './Person.css';
 import Aux from '../../../hoc/Aux';
 import withWrappedComponent from '../../../hoc/withWrappedComponent';
@@ -47,6 +50,13 @@ class Person extends Component {
         );
     }
 }
+
+Person.prototypes = {
+    click: Proptypes.func,
+    name: Proptypes.string,
+    age: Proptypes.number,
+    changed: Proptypes.func
+};
 
 // export default Person;
 export default withWrappedComponent(Person, classes.Person);
