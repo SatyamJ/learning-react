@@ -5,6 +5,7 @@ import Proptypes from 'prop-types';
 import classes from './Person.css';
 import Aux from '../../../hoc/Aux';
 import withWrappedComponent from '../../../hoc/withWrappedComponent';
+import AuthContext from '../../../context/auth-context';
 
 class Person extends Component {
 
@@ -52,6 +53,11 @@ class Person extends Component {
                 <input onChange={this.props.changed} value={this.props.name}/>
             </Aux>*/
             <React.Fragment>
+                <AuthContext.Consumer>
+                    {(context) =>
+                        context.isAuthenticated ? <p>i'm authenticated</p> : <p> Please login</p>
+                    }
+                </AuthContext.Consumer>
                 <p onClick={this.props.click}>
                     my name is {this.props.name} and age is {this.props.age}
                 </p>

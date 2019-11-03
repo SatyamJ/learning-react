@@ -7,6 +7,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import WithClass from '../hoc/WithClass'
 import Aux from '../hoc/Aux'
 import withWrappedComponent from '../hoc/withWrappedComponent';
+import AuthContext from '../context/auth-context';
 
 /*
 const app = (props) => {
@@ -64,7 +65,8 @@ class App extends Component {
         showPersons: false,
         username: "",
         showCockpit: true,
-        nameChangeCounter: 0
+        nameChangeCounter: 0,
+        isAuthenticated: false
     };
 
     static getDerivedStateFromProps(props, state) {
@@ -90,6 +92,12 @@ class App extends Component {
                 {name: "Gotya", age: 24}
             ]
         });
+    };
+
+    loginHandler = () => {
+      this.setState({
+          isAuthenticated: true
+      })
     };
 
     nameChangedHandler = (event, personId) => {
@@ -165,12 +173,19 @@ class App extends Component {
                 {persons}
             </WithClass>
             */
-
-            <Aux>
-                <button onClick={this.toggleCockpit}>Toggle Cockpit</button>
-                {cockpit}
-                {persons}
-            </Aux>
+            <AuthContext.Provider
+                value={
+                    {
+                        isAuthenticated: this.state.isAuthenticated,
+                        login: this.loginHandler
+                    }
+                }>
+                <Aux>
+                    <button onClick={this.toggleCockpit}>Toggle Cockpit</button>
+                    {cockpit}
+                    {persons}
+                </Aux>
+            </AuthContext.Provider>
         )
     }
 }
