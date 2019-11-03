@@ -7,6 +7,17 @@ import Aux from '../../../hoc/Aux';
 import withWrappedComponent from '../../../hoc/withWrappedComponent';
 
 class Person extends Component {
+
+    constructor(props) {
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+
+    componentDidMount() {
+        // this.inputElementRef.focus();
+        this.inputElementRef.current.focus();
+    }
+
     render() {
         console.log('Person.js | render');
 
@@ -45,7 +56,12 @@ class Person extends Component {
                     my name is {this.props.name} and age is {this.props.age}
                 </p>
                 <p>{this.props.children}</p>
-                <input onChange={this.props.changed} value={this.props.name}/>
+                <input
+                    // ref={(inputElementRef) => {this.inputElementRef = inputElementRef}}
+                    ref={this.inputElementRef}
+                    onChange={this.props.changed}
+                    value={this.props.name}
+                />
             </React.Fragment>
         );
     }
