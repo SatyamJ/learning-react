@@ -9,11 +9,12 @@ class FullPost extends Component {
         post: null
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.postId) {
+
+    componentDidMount() {
+        if (this.props.match.params.id) {
             if (!this.state.post || (this.state.post && this.state.post.id !== this.props.postId)) {
                 axios
-                    .get('/posts/' + this.props.postId)
+                    .get('/posts/' + this.props.match.params.id)
                     .then(response => {
                         this.setState({
                             post: response.data
@@ -28,13 +29,13 @@ class FullPost extends Component {
     }
 
     postDeleteHandler = () => {
-      axios.delete('/posts/' + this.props.postId)
-          .then(resposne => {
-              console.log(resposne)
-          })
-          .catch(error => {
-              console.log(error);
-          });
+        axios.delete('/posts/' + this.props.postId)
+            .then(resposne => {
+                console.log(resposne)
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     render() {
