@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route} from "react-router-dom";
+import {Link, Route} from "react-router-dom";
 
 import './Courses.css';
 import Course from "../Course/Course";
@@ -24,13 +24,24 @@ class Courses extends Component {
                 <section className="Courses">
                     {
                         this.state.courses.map(course => {
-                            return <article onClick={() => this.courseClickHandler(course.id, course.title)}
-                                            className="Course"
-                                            key={course.id}>{course.title}
-                            </article>;
+                            return (
+                                <Link key={course.id}
+                                      to={{
+                                          pathname: '/courses/' + course.id,
+                                          search: '?title=' + course.title
+                                      }}>
+                                    {/*<article onClick={() => this.courseClickHandler(course.id, course.title)}*/}
+                                    {/*         className="Course"*/}
+                                    {/*         key={course.id}>{course.title}*/}
+                                    {/*</article>;            */}
+                                    <article className="Course">{course.title}</article>
+                                </Link>
+                            )
+
                         })
                     }
                 </section>
+                <Route exact path="/courses/:id" component={Course}/>
             </div>
         );
     }

@@ -46,8 +46,8 @@ class App extends Component {
                     </header>
                     <Switch>
                         <Route exact path="/users" component={Users}/>
-                        <Route exact path="/courses/:id" component={Course} />
-                        <Route exact path="/courses" component={Courses}/>
+                        {/*<Route exact path="/courses/:id" component={Course} />*/}
+                        <Route path="/courses" component={Courses}/>
                         <Redirect from="/all-courses" to="/courses"/>
                         <Route render={() => <h2>Not found</h2>}/>
                     </Switch>
