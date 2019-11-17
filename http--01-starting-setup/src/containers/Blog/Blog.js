@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Route, NavLink, Switch} from 'react-router-dom'
+import {Route, NavLink, Switch, Redirect} from 'react-router-dom'
 
-import FullPost from './FullPost/FullPost';
 import NewPost from './NewPost/NewPost';
 import './Blog.css';
 import Posts from "./Posts/Posts";
@@ -10,7 +9,8 @@ class Blog extends Component {
 
     state = {
         posts: [],
-        selectedPostId: null
+        selectedPostId: null,
+        isAuthenticated: true
     };
 
 
@@ -22,7 +22,7 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><NavLink exact to="/">Posts</NavLink></li>
+                            <li><NavLink exact to="/posts">Posts</NavLink></li>
                             <li><NavLink
                                 activeClassName="my-active"
                                 activeStyle={{
@@ -37,10 +37,11 @@ class Blog extends Component {
                         </ul>
                     </nav>
                 </header>
-                <Route path="/" exact component={Posts}/>
                 <Switch>
-                    <Route path="/new-post" component={NewPost}/>
-                    <Route path="/:id" component={FullPost}/>
+                    {this.state.isAuthenticated ? <Route path="/new-post" component={NewPost}/> : null}
+                    <Route path="/posts" component={Posts}/>
+                    {/*<Route render={() => <h2>Not Found</h2>}/>*/}
+                    <Redirect from="/" to="/posts"/>
                 </Switch>
             </div>
         );
