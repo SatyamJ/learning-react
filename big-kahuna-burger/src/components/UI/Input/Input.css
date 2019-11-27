@@ -24,3 +24,8 @@
     margin-bottom: 6px;
     font-weight: bold;
 }
+
+.Invalid {
+    border: 1px solid red;
+    background-color: #fadcd9;
+}
