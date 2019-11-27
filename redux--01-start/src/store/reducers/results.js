@@ -1,37 +1,15 @@
-import * as actionTypes from '../store/actions';
+import * as actionTypes from '../actions';
 
 const initialState = {
-    counter: 0,
     results: []
 };
 
 const reducer = (currentState = initialState, action) => {
     switch (action.type) {
-        case actionTypes.INCREMENT:
-            return {
-                ...currentState,
-                counter: currentState.counter + 1
-            };
-
-        case actionTypes.DECREMENT:
-            return {
-                ...currentState,
-                counter: currentState.counter - 1
-            };
-        case actionTypes.ADD:
-            return {
-                ...currentState,
-                counter: currentState.counter + action.value
-            };
-        case actionTypes.SUB:
-            return {
-                ...currentState,
-                counter: currentState.counter - action.value
-            };
         case actionTypes.STORE_RESULT:
             return {
                 ...currentState,
-                results: currentState.results.concat({id: new Date(), value: currentState.counter})
+                results: currentState.results.concat({id: new Date(), value: action.result})
             };
         case actionTypes.DELETE_RESULT:
             /*
