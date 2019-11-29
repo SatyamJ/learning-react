@@ -38,7 +38,7 @@ class Persons extends Component {
     render() {
         return (
             <div>
-                <AddPerson personAdded={() => this.props.addPerson(this.getRandomPerson())}/>
+                <AddPerson personAdded={(person) => this.props.addPerson(person)}/>
                 {this.props.prsns.map(person => (
                     <Person
                         key={person.id}
