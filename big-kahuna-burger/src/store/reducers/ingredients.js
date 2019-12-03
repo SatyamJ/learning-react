@@ -9,9 +9,9 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
             const updatedIngredients = {
-                ...state.ingredients
+                ...state.ingredients,
+                [action.key]: updatedIngredients[action.key] + 1
             };
-            updatedIngredients[action.key] = updatedIngredients[action.key] + 1;
             return {
                 ingredients: updatedIngredients
             };
@@ -23,9 +23,9 @@ const reducer = (state = initialState, action) => {
             };
         case actionTypes.REMOVE_INGREDIENT:
             const newIngredients = {
-                ...state.ingredients
+                ...state.ingredients,
+                [action.key]: newIngredients[action.key] - 1
             };
-            newIngredients[action.key] = newIngredients[action.key] - 1;
             return {
                 ingredients: newIngredients
             };
